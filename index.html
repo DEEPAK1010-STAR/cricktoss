@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CricToss: Coin Toss & Cricket Scorer</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="ambient-light ambient-1"></div>
+    <div class="ambient-light ambient-2"></div>
+    <div class="ambient-light ambient-3"></div>
+
+    <main class="container">
+        <header class="app-header">
+            <div class="logo-glow">CricToss</div>
+            <p class="developer-credit">Developed by <span class="dev-name">Deepak Patil</span></p>
+        </header>
+
+        <nav class="tabs" aria-label="App Navigation">
+            <button class="tab-btn active" data-target="tossView">
+                <span class="tab-icon">🪙</span> Coin Toss
+            </button>
+            <button class="tab-btn" data-target="cricketView">
+                <span class="tab-icon">🏏</span> Scorer
+            </button>
+        </nav>
+
+        <div id="tossView" class="view active">
+            <h1>Heads or Tails?</h1>
+            <p class="subtitle">Tap the coin or press flip to decide your fate.</p>
+            
+            <div class="coin-scene" id="coinScene" role="button" tabindex="0" aria-label="Flip coin">
+                <div class="coin" id="coin">
+                    <div class="coin-face coin-face--heads">
+                        <div class="coin-inner">
+                            <span>HEADS</span>
+                        </div>
+                    </div>
+                    <div class="coin-face coin-face--tails">
+                        <div class="coin-inner">
+                            <span>TAILS</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="controls">
+                <button id="flipBtn" class="primary-btn neon-btn">
+                    <span class="btn-text">FLIP COIN</span>
+                </button>
+            </div>
+
+            <p id="result" class="result" aria-live="polite">Ready to flip!</p>
+        </div>
+
+        <div id="cricketView" class="view">
+            
+            <div id="setupScreen" class="cricket-section">
+                <h1>Match Setup</h1>
+                <p class="subtitle">Enter match details to ignite the scoreboard.</p>
+                <div class="input-group">
+                    <label>Team A Name</label>
+                    <input type="text" id="teamA" placeholder="e.g. India">
+                </div>
+                <div class="input-group">
+                    <label>Team B Name</label>
+                    <input type="text" id="teamB" placeholder="e.g. Australia">
+                </div>
+                <div class="input-group">
+                    <label>Total Overs</label>
+                    <input type="number" id="overs" placeholder="e.g. 5" min="1">
+                </div>
+                <button id="startMatchBtn" class="primary-btn neon-btn mt-2">Initialize Match</button>
+            </div>
+
+            <div id="choiceScreen" class="cricket-section hidden">
+                <h1>Who's Batting First?</h1>
+                <p class="subtitle">Select the team opening the innings.</p>
+                <div class="choice-actions">
+                    <button id="batTeamABtn" class="primary-btn choice-btn neon-btn"></button>
+                    <button id="batTeamBBtn" class="primary-btn choice-btn neon-btn"></button>
+                </div>
+                <button id="backToSetupBtn" class="secondary-btn mt-2">Back to Setup</button>
+            </div>
+
+            <div id="scoringScreen" class="cricket-section hidden">
+                <div class="scoreboard">
+                    <div class="scoreboard-inner">
+                        <h2 id="battingTeamName">Team A</h2>
+                        <div class="score-display">
+                            <span id="scoreText" class="score-glow">0 / 0</span>
+                        </div>
+                        <div class="overs-display">
+                            Overs: <span id="oversText" class="neon-text">0.0</span> <span class="text-muted">/ <span id="totalOversText">5</span></span>
+                        </div>
+                        <div class="target-display hidden" id="targetDiv">
+                            Target: <span id="targetScore" class="neon-text-warning"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="players-inputs">
+                    <div class="input-group">
+                        <label>Striker</label>
+                        <input type="text" id="strikerIn" placeholder="Current Striker">
+                    </div>
+                    <div class="input-group">
+                        <label>Non-Striker</label>
+                        <input type="text" id="nonStrikerIn" placeholder="Non-Striker">
+                    </div>
+                    <div class="input-group full-width">
+                        <label>Bowler</label>
+                        <input type="text" id="bowlerIn" placeholder="Current Bowler">
+                    </div>
+                </div>
+
+                <div class="scoring-actions">
+                    <button class="run-btn neon-border" data-run="0">0</button>
+                    <button class="run-btn neon-border" data-run="1">1</button>
+                    <button class="run-btn neon-border" data-run="2">2</button>
+                    <button class="run-btn neon-border" data-run="3">3</button>
+                    <button class="run-btn neon-border highlight-blue" data-run="4">4</button>
+                    <button class="run-btn neon-border highlight-purple" data-run="6">6</button>
+                    <button class="action-btn btn-danger" data-action="W">WICKET</button>
+                    <button class="action-btn btn-warning" data-action="WD">WIDE</button>
+                    <button class="action-btn btn-warning" data-action="NB">NO BALL</button>
+                </div>
+            </div>
+
+            <div id="resultScreen" class="cricket-section hidden">
+                <h1>Match Result</h1>
+                <h2 id="winnerText" class="winner-text neon-text"></h2>
+                <div class="pom-card glow-card">
+                    <h3 id="pomText"></h3>
+                </div>
+                
+                <div id="scorecardsContainer" class="scorecards"></div>
+                
+                <button id="newMatchBtn" class="primary-btn neon-btn mt-2">Start New Match</button>
+            </div>
+
+        </div>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
